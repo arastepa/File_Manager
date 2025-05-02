@@ -4,6 +4,12 @@ import readline from 'readline';
 import { goUp } from './nwd/up.js';
 import { changeDirectory } from './nwd/changeDir.js';
 import {listDirectory} from './nwd/ls.js'
+import {readContnet} from './files/cat.js'
+import {createFile} from './files/createFile.js'
+import {renameFile} from './files/rename.js'
+import {copyFile} from './files/copyFile.js'
+import {moveFile} from './files/moveFile.js'
+import {deleteFile} from './files/deleteFile.js'
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -31,6 +37,24 @@ rl.on('line', async (input) => {
         break;
       case 'ls':
         listDirectory();
+        break;
+      case 'cat':
+        readContnet(args[0]);
+        break;
+      case 'add':
+        createFile(args[0]);
+        break;
+      case 'rn':
+        renameFile(args[0], args[1]);
+        break;
+      case 'cp':
+        copyFile(args[0], args[1]);
+        break;
+      case 'mv':
+        moveFile(args[0], args[1]);
+        break;
+      case 'rm':
+        deleteFile(args[0]);
         break;
       case '.exit':
         exitProgram();
