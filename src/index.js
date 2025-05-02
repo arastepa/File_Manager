@@ -10,6 +10,7 @@ import {renameFile} from './files/rename.js'
 import {copyFile} from './files/copyFile.js'
 import {moveFile} from './files/moveFile.js'
 import {deleteFile} from './files/deleteFile.js'
+import { handleOsCommand } from './os/osCommand.js';
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -55,6 +56,9 @@ rl.on('line', async (input) => {
         break;
       case 'rm':
         deleteFile(args[0]);
+        break;
+      case 'os':
+        handleOsCommand(args[0]);
         break;
       case '.exit':
         exitProgram();
