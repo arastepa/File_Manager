@@ -1,6 +1,6 @@
-import os from 'os';
-import { userInfo } from 'os';
-import readline from 'readline';
+import os from 'node:os';
+import { userInfo } from 'node:os';
+import readline from 'node:readline/promises';
 import { goUp } from './nwd/up.js';
 import { changeDirectory } from './nwd/changeDir.js';
 import {listDirectory} from './nwd/ls.js'
@@ -11,6 +11,10 @@ import {copyFile} from './files/copyFile.js'
 import {moveFile} from './files/moveFile.js'
 import {deleteFile} from './files/deleteFile.js'
 import { handleOsCommand } from './os/osCommand.js';
+import { calculateHash } from './hash/hash.js';
+import { compressFile } from './compress/compress.js';
+import { decompressFile } from './compress/decompress.js';
+
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -21,7 +25,7 @@ process.chdir(currentDir);
 console.log(`Welcome to the File Manager, ${username}!`);
 printCurrentDirectory();
 
-const rl = readline.createInterface({
+const rl = await readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
@@ -59,6 +63,15 @@ rl.on('line', async (input) => {
         break;
       case 'os':
         handleOsCommand(args[0]);
+        break;
+      case 'hash':
+        calculateHash(args[0]);
+        break;
+      case 'compress':
+        compressFile(args[0], args[1]);
+        break;
+      case 'decompress':
+        decompressFile(args[0], args[1]);
         break;
       case '.exit':
         exitProgram();

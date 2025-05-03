@@ -1,10 +1,9 @@
 import fs from 'node:fs/promises';
-import path from 'path';
+import path from 'node:path';
 
 export async function listDirectory() {
   try {
     const items = await fs.readdir(process.cwd());
-    console.log('List of files and directories:', items);
 
     const directories = await Promise.all(items.map(async (item) => {
       const stats = await fs.lstat(path.join(process.cwd(), item));
